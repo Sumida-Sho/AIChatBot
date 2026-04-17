@@ -95,6 +95,6 @@ public class PostDAO {
 		return posts;
 	}
 
-	public Post findById
+	public Post 
 
 }
