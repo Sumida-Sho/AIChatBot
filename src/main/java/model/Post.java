@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Post {
 	private int postId;
-	private String userId;
+	private int userId;
 	private String content;
 	private String aiResponse;
 	private Timestamp createdAt;
@@ -20,7 +20,7 @@ public class Post {
 		this.postId = postId;
 	}
 
-	public Post(int postId, String userId, String content, String aiResponse, Timestamp createdAt, String username) {
+	public Post(int postId, int userId, String content, String aiResponse, Timestamp createdAt, String username) {
 		this.postId = postId;
 		this.userId = userId;
 		this.content = content;
@@ -38,11 +38,11 @@ public class Post {
 		this.postId = postId;
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
