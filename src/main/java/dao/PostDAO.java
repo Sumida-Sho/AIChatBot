@@ -12,7 +12,7 @@ import model.Post;
 
 public class PostDAO {
 	public boolean insert(Post post) throws SQLException {
-		String sql = "INSERT INTO Post (userId,content,aiResponse) VALUES (?,?,?)";
+		String sql = "INSERT INTO posts (userId,content,aiResponse) VALUES (?,?,?)";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -31,6 +31,10 @@ public class PostDAO {
 				}
 				return true;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("DBのinsert処理エラー発生");
+			return false;
 		}
 		return false;
 	}
@@ -44,7 +48,7 @@ public class PostDAO {
 				"p.createdAt, " +
 				"p.userId, " +
 				"u.username " +
-				"FROM Post AS p JOIN User AS u ON p.userId = u.userId" +
+				"FROM posts AS p JOIN users AS u ON p.userId = u.userId" +
 				"ORDER BY p.createdAt DESC";
 
 		try (Connection connection = ConnectionManager.getConnection();
@@ -60,6 +64,9 @@ public class PostDAO {
 				post.setCreatedAt(resultSet.getTimestamp("createdAt"));
 				posts.add(post);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("DBのSELECT処理エラー発生");
 		}
 		return posts;
 	}
@@ -73,7 +80,7 @@ public class PostDAO {
 				"p.createdAt, " +
 				"p.userId, " +
 				"u.username " +
-				"FROM Post AS p JOIN User AS u ON p.userId = u.userId " +
+				"FROM posts AS p JOIN users AS u ON p.userId = u.userId " +
 				"WHERE p.userId = ? " +
 				"ORDER BY p.createdAt DESC";
 
@@ -91,10 +98,29 @@ public class PostDAO {
 					posts.add(post);
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("DBのSELECT処理エラー発生");
 		}
 		return posts;
 	}
 
-	public Post 
+	public boolean delete(int postId, int userId) throws SQLException {
+		String sql = "DELETE FROM posts WHERE postId = ? AND userId = ?";
+
+		try (Connection connection = ConnectionManager.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql)) {
+
+			statement.setInt(1, postId);
+			statement.setInt(2, userId);
+
+			return statement.executeUpdate() > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("DBのdelete処理エラー発生");
+			return false;
+		}
+	}
 
 }

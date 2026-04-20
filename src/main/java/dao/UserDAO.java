@@ -14,7 +14,7 @@ import model.User;
 public class UserDAO {
 
 	public boolean insert(User user) throws SQLException {
-		String sql = "INSERT INTO User (username,email,password,userId) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (username,email,password) VALUES (?,?,?)";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -39,6 +39,9 @@ public class UserDAO {
 				}
 				return true;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("DBのINSERT処理エラー発生");
 		}
 		return false;
 	}
@@ -46,12 +49,15 @@ public class UserDAO {
 	public User login(String email, String password) throws SQLException {
 		String hash = hPassword(password);
 
-		String sql = "SELECT username,email,password,userId FROM User WHERE email=? AND password=?";
+		String sql = "SELECT username,email,password,userId FROM users WHERE email=? AND password=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, email);
 			statement.setString(2, hash);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ログインエラー発生");
 		}
 
 		return null;
@@ -65,12 +71,13 @@ public class UserDAO {
 			return hash.toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
+			System.err.println("パスワードのハッシュ化でエラー発生");
 			return null;
 		}
 	}
 
 	public User findById(int userId) throws SQLException {
-		String sql = "SELECT userId,username FROM User WHERE userId=?";
+		String sql = "SELECT userId,username FROM users WHERE userId=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -85,12 +92,15 @@ public class UserDAO {
 					return user;
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ユーザー特定エラー発生");
 		}
 		return null;
 	}
 
 	public boolean update(User user) throws SQLException {
-		String sql = "UPDATE User SET username=?, bio=? WHERE userId=?";
+		String sql = "UPDATE users SET username=?, bio=? WHERE userId=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -100,6 +110,10 @@ public class UserDAO {
 			statement.setInt(3, user.getUserId());
 
 			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ユーザー情報更新エラー発生");
+			return false;
 		}
 	}
 
