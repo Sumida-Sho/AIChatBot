@@ -19,6 +19,7 @@ public class RegisterServlet extends HttpServlet {
 		super.init();
 	}
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -27,8 +28,12 @@ public class RegisterServlet extends HttpServlet {
 		request.getRequestDispatcher("/register.jsp").forward(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -36,13 +41,19 @@ public class RegisterServlet extends HttpServlet {
 		User user = new User(username, email, password);
 		UserDAO dao = new UserDAO();
 		try {
-			dao.insert(user);
-			response.sendRedirect("LoginServlet");
+			boolean register = dao.insert(user);
+
+			if (register) {
+				response.sendRedirect("LoginServlet");
+			} else {
+				request.setAttribute("errorMessage", "既に登録済みか、入力内容が正しくありません");
+				request.getRequestDispatcher("/register.jsp").forward(request, response);
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("RegisterServletで登録エラー発生");
-			request.setAttribute("errorMessage", "登録中にエラーが発生しました");
-			response.sendRedirect("RegisterServlet");
+			request.setAttribute("errorMessage", "登録中にシステムエラーが発生しました");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
 		}
 
 	}

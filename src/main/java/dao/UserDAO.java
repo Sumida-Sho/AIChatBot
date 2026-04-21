@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
 
 import model.User;
 
@@ -15,19 +13,15 @@ public class UserDAO {
 
 	public boolean insert(User user) throws SQLException {
 		String sql = "INSERT INTO users (username,email,password) VALUES (?,?,?)";
-
 		try (Connection connection = ConnectionManager.getConnection();
-				PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement statement = connection.prepareStatement(sql,
+						java.sql.Statement.RETURN_GENERATED_KEYS)) {
+
+			String hash = hPassword(user.getPassword());
 
 			statement.setString(1, user.getUsername());
 			statement.setString(2, user.getEmail());
-			statement.setString(3, user.getPassword());
-
-			if (user.getUserId() == 0) {
-				statement.setNull(4, Types.INTEGER);
-			} else {
-				statement.setInt(4, user.getUserId());
-			}
+			statement.setString(3, hash);
 
 			int affectedRows = statement.executeUpdate();
 
@@ -49,12 +43,23 @@ public class UserDAO {
 	public User login(String email, String password) throws SQLException {
 		String hash = hPassword(password);
 
-		String sql = "SELECT username,email,password,userId FROM users WHERE email=? AND password=?";
+		String sql = "SELECT username,email,password,user_id FROM users WHERE email=? AND password=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, email);
 			statement.setString(2, hash);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					User user = new User();
+					user.setUserId(rs.getInt("user_id"));
+					user.setUsername(rs.getString("username"));
+					user.setEmail(rs.getString("email"));
+
+					return user;
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("ログインエラー発生");
@@ -68,7 +73,13 @@ public class UserDAO {
 		try {
 			MessageDigest message = MessageDigest.getInstance("SHA-256");
 			byte[] hash = message.digest(password.getBytes());
-			return hash.toString();
+
+			StringBuilder sb = new StringBuilder();
+			for (byte b : hash) {
+				sb.append(String.format("%02x", b));
+			}
+			return sb.toString();
+
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			System.err.println("パスワードのハッシュ化でエラー発生");
@@ -77,7 +88,7 @@ public class UserDAO {
 	}
 
 	public User findById(int userId) throws SQLException {
-		String sql = "SELECT userId,username FROM users WHERE userId=?";
+		String sql = "SELECT userId,username FROM users WHERE user_id=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -87,7 +98,7 @@ public class UserDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 					User user = new User();
-					user.setUserId(resultSet.getInt("userId"));
+					user.setUserId(resultSet.getInt("user_id"));
 					user.setUsername(resultSet.getString("name"));
 					return user;
 				}
@@ -100,7 +111,7 @@ public class UserDAO {
 	}
 
 	public boolean update(User user) throws SQLException {
-		String sql = "UPDATE users SET username=?, bio=? WHERE userId=?";
+		String sql = "UPDATE users SET username=?, bio=? WHERE user_id=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
