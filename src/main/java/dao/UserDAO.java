@@ -88,7 +88,7 @@ public class UserDAO {
 	}
 
 	public User findById(int userId) throws SQLException {
-		String sql = "SELECT userId,username FROM users WHERE user_id=?";
+		String sql = "SELECT user_id,username FROM users WHERE user_id=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {

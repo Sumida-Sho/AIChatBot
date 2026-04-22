@@ -14,10 +14,10 @@ public class Post {
 	public Post() {
 	}
 
-	public Post(String content, String aiResponse, int postId) {
+	public Post(int userId, String content, String aiResponse) {
+		this.userId = userId;
 		this.content = content;
 		this.aiResponse = aiResponse;
-		this.postId = postId;
 	}
 
 	public Post(int postId, int userId, String content, String aiResponse, Timestamp createdAt, String username) {

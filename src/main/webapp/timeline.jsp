@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="java.util.List,java.util.ArrayList,java.text.simpleDateFormat,model.post" %>
+    <%@page import="java.util.List,java.util.ArrayList,java.text.SimpleDateFormat,model.Post" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,14 +39,16 @@
 					List<Post> posts=(List<Post>)request.getAttribute("posts");
 					if(posts != null && !posts.isEmpty()){
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd HH:mm");
-						for(Post post : posts){
+						for(Post p : posts){
 				%>	
 				<div class="article-item">
-					<div class="username"><%=post.getUsername() %></div>
-					<span class="date"><%=dateFormat.(post.getCreatedAt()) %></span>
+				
+					<div class="username"><%=p.getUsername() %></div>
+					<span class="date"><%=dateFormat.format(p.getCreatedAt()) %></span>
 					<div class="question">❓質問</div>
-					<h4 class="question-content"><%=post.getContent() %></h4>
-					<p class="ai-response"><%=post.getAiResponse() %></p>
+					<h4 class="question-content"><%=p.getContent() %></h4>
+					<div class="response">🤖回答</div>
+					<p class="ai-response"><%=p.getAiResponse() %></p>
 				</div>
 				
 				<%

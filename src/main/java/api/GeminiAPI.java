@@ -37,7 +37,7 @@ public class GeminiAPI {
 	// ============================================
 	// ★ ここに自分のAPIキーを貼り付けてください
 	// ============================================
-	private static final String API_KEY = "AIzaSyCrgITDRX5FuuoyxsK4MAoFtoOX0t-VwOQ";
+	private static final String API_KEY = "AIzaSyCvBGm6stEXNqscizlyGCwzNWWXpgoubfw";
 
 	// 使用するモデル（無料枠で利用可能）
 	private static final String MODEL = "gemini-2.5-flash";
@@ -185,23 +185,17 @@ public class GeminiAPI {
 					char next = json.charAt(i + 1);
 					switch (next) {
 					case 'n':
-                            
-                            
+
 						result.append('\n');
-                            
-                            
+
 						break;
-                            
-                            
+
 					case 'r':
-                            
-                            
+
 						result.append('\r');
-                            
-                            
+
 						break;
-                            
-                            
+
 					case 't':
 						result.append('\t');
 						break;

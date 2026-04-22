@@ -10,6 +10,7 @@
 </head>
 <body>
 	<div class="container">
+		
 		<h1>AIチャットボット-トップ画面</h1>
 		<div class="about">初めてご利用になられる方は新規登録ボタンより登録を済ませてログインしてください。<br>
 		既に登録されている方はログインしてください。
@@ -19,11 +20,10 @@
 			<li class="list-item"><a href="LoginServlet">ログイン</a></li>
 		
 			<a href="DeleteServlet">削除</a>
-			<a href="LogoutServlet">ログアウト</a>
 			<a href="MyPageServlet">マイページ</a>
 			<a href="PostServlet">質問</a>
 			<a href="ProfileEditServlet">プロフィール編集</a>
-			<a href="TimelineServlet">タイムライン</a>
+			
 		</ul>
 	
 		<footer class="footer">
