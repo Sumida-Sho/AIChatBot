@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="java.util.List,java.util.ArrayList,java.text.SimpleDateFormat,model.Post" %>
+    <%@page import="java.util.List,java.util.ArrayList,java.text.SimpleDateFormat,model.Post,model.User" %>
+     <%User loginUser = (User) session.getAttribute("loginUser"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +24,18 @@
 					<a href="TimelineServlet" class="">質問・回答一覧</a>
 				</li>
 				<li class="nav-item">
-					<a href="LogoutServlet" class="">ログアウト</a>
+					<a href="LogoutServlet" class="" onclick="return confirm('本当にログアウトしますか？');">ログアウト</a>
 				</li>
 			</ul>
 		</nav>
 		
 		<main class="main-content">
 			<div class="article-list">
+				<ul class="bio-list">
+					<li>名前：<%=loginUser.getUsername() %></li>
+					<li>メールアドレス：<%=loginUser.getEmail() %></li>
+					<li>自己紹介：<%=loginUser.getBio() %></li>
+				</ul>
 				<%
 					@SuppressWarnings("unchecked")
 					List<Post> myPosts=(List<Post>)request.getAttribute("myPosts");
@@ -38,13 +44,14 @@
 						for(Post p : myPosts){
 				%>	
 				<div class="article-item">
-				
+					
 					<div class="username"><%=p.getUsername() %></div>
 					<span class="date"><%=dateFormat.format(p.getCreatedAt()) %></span>
 					<div class="question">❓質問</div>
 					<h4 class="question-content"><%=p.getContent() %></h4>
 					<div class="response">🤖回答</div>
 					<p class="ai-response"><%=p.getAiResponse() %></p>
+					<a href="DeleteServlet?postId=<%=p.getPostId() %>&userId=<%=p.getUserId() %>>" onclick="return confirm('本当にこの質問を削除しますか？');">削除</a>
 				</div>
 				
 				<%

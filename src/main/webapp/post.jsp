@@ -23,7 +23,7 @@
 					<a href="MyPageServlet" class="">マイページ</a>
 				</li>
 				<li class="nav-item">
-					<a href="LogoutServlet" class="">ログアウト</a>
+					<a href="LogoutServlet" class="" onclick="return confirm('本当にログアウトしますか？');">ログアウト</a>
 				</li>
 			</ul>
 		</nav>

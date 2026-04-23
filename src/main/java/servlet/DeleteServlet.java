@@ -1,12 +1,16 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import dao.PostDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.User;
 
 @WebServlet("/DeleteServlet")
 public class DeleteServlet extends HttpServlet {
@@ -21,13 +25,23 @@ public class DeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		try {
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			HttpSession session = request.getSession();
+			User loginUser = (User) session.getAttribute("loginUser");
+
+			if (loginUser != null) {
+				int userId = loginUser.getUserId();
+				PostDAO dao = new PostDAO();
+				dao.delete(postId, userId);
+				response.sendRedirect("MyPageServlet");
+			} else {
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		doGet(request, response);
-	}
-
 }

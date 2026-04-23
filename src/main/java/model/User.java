@@ -21,6 +21,12 @@ public class User {
 		this.password = password;
 	}
 
+	public User(String username, String bio, int userId) {
+		this.username = username;
+		this.bio = bio;
+		this.userId = userId;
+	}
+
 	public User(int userId, String username, String email, String password, String bio, Timestamp createdAt) {
 		this.userId = userId;
 		this.username = username;

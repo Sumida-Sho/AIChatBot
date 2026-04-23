@@ -47,6 +47,7 @@ public class PostServlet extends HttpServlet {
 			if (loginUser != null) {
 				int userId = loginUser.getUserId();
 				Post post = new Post(userId, content.trim(), aiResponse.trim());
+
 				PostDAO dao = new PostDAO();
 				boolean success = dao.insert(post);
 

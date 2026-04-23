@@ -43,11 +43,11 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			UserDAO dao = new UserDAO();
-			User user = dao.login(email, password);
+			User loginUser = dao.login(email, password);
 
-			if (user != null) {
+			if (loginUser != null) {
 				HttpSession session = request.getSession();
-				request.getSession().setAttribute("loginUser", user);
+				session.setAttribute("loginUser", loginUser);
 				session.setAttribute("successMessage", "ログイン成功");
 				response.sendRedirect("TimelineServlet");
 			} else {

@@ -27,11 +27,11 @@ public class MyPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("loginUser");
+		User loginUser = (User) session.getAttribute("loginUser");
 
 		PostDAO dao = new PostDAO();
 		List<Post> myPosts = null;
-		int userId = user.getUserId();
+		int userId = loginUser.getUserId();
 
 		try {
 			myPosts = dao.findByUserId(userId);
@@ -39,6 +39,7 @@ public class MyPageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		session.setAttribute("loginUser", loginUser);
 		request.setAttribute("myPosts", myPosts);
 		request.getRequestDispatcher("/mypage.jsp").forward(request, response);
 	}
