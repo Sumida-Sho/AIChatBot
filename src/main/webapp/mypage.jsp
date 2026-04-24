@@ -30,6 +30,15 @@
 		</nav>
 		
 		<main class="main-content">
+		<%
+			String msg=(String)session.getAttribute("successMessage");
+			if(msg!=null){
+				out.println("<p style='color:blue;'>"+msg+"</p>");
+			}
+		%>
+		<%
+			session.removeAttribute("successMessage");
+		%>
 			<div class="article-list">
 				<ul class="bio-list">
 					<li>名前：<%=loginUser.getUsername() %></li>

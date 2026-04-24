@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 @WebServlet("/RegisterServlet")
@@ -38,14 +39,25 @@ public class RegisterServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		User user = new User(username, email, password);
-		UserDAO dao = new UserDAO();
+		if (username == null || username.trim().isEmpty() || email == null || email.trim().isEmpty() || password == null
+				|| password.trim().isEmpty()) {
+			request.setAttribute("errorMessage", "正しく入力してください");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			return;
+		}
+
 		try {
+
+			User user = new User(username, email, password);
+			UserDAO dao = new UserDAO();
 			boolean register = dao.insert(user);
 
 			if (register) {
+				HttpSession session = request.getSession();
+				session.setAttribute("successMessage", "新規登録に成功しました");
 				response.sendRedirect("LoginServlet");
 			} else {
+
 				request.setAttribute("errorMessage", "既に登録済みか、入力内容が正しくありません");
 				request.getRequestDispatcher("/register.jsp").forward(request, response);
 			}
@@ -53,7 +65,7 @@ public class RegisterServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "登録中にシステムエラーが発生しました");
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 
 	}

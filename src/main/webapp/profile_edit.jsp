@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<th>新しい名前:</th>
-					<td><input type="text" name="username"></td>
+					<td><input type="text" name="username" required></td>
 				</tr>
 		
 				<tr>

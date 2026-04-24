@@ -10,6 +10,12 @@
 </head>
 <body>
 	<div class="container">
+		<%
+			String msg=(String)request.getAttribute("errorMessage");
+			if(msg!=null){
+				out.println("<p style='color:red;'>"+msg+"</p>");
+			}
+		%>
 		
 		<footer class="footer">
 			<p>&copy;2026 AIChatBot</p>

@@ -13,11 +13,22 @@
 		<h1>AIチャットボット-ログイン画面</h1>
 		
 		<%
-				String msg=(String)request.getAttribute("errorMessage");
-				if(msg!=null){
-					out.println("<p style='color:red;'>"+msg+"</p>");
+				String successMsg=(String)session.getAttribute("successMessage");
+				if(successMsg!=null){
+					out.println("<p style='color:blue;'>"+successMsg+"</p>");
 				}
-			%>
+		%>
+		
+		<%
+			session.removeAttribute("successMessage");
+		%>
+	
+		<%
+				String errorMsg=(String)request.getAttribute("errorMessage");
+				if(errorMsg!=null){
+					out.println("<p style='color:red;'>"+errorMsg+"</p>");
+				}
+		%>
 		<div class="about">
 			メールアドレスとパスワードを入力してください
 		</div>

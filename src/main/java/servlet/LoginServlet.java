@@ -43,6 +43,12 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			UserDAO dao = new UserDAO();
+
+			if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+				request.setAttribute("errorMessage", "正しく入力してください");
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				return;
+			}
 			User loginUser = dao.login(email, password);
 
 			if (loginUser != null) {
@@ -52,7 +58,7 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("TimelineServlet");
 			} else {
 
-				request.setAttribute("errorMessage", "ログイン失敗しました");
+				request.setAttribute("errorMessage", "入力内容に誤りがあります");
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {

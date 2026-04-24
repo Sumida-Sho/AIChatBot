@@ -66,7 +66,7 @@ public class PostServlet extends HttpServlet {
 			String errorMessage = validateInput(content);
 			if (errorMessage != null) {
 				request.setAttribute("errorMessage", errorMessage);
-				request.getRequestDispatcher("/post.jsp").forward(request, response);
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
 				return;
 			}
 

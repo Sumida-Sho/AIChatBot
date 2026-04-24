@@ -34,6 +34,7 @@ public class DeleteServlet extends HttpServlet {
 				int userId = loginUser.getUserId();
 				PostDAO dao = new PostDAO();
 				dao.delete(postId, userId);
+				session.setAttribute("errorMessage", "削除エラーが発生しました");
 				response.sendRedirect("MyPageServlet");
 			} else {
 				response.sendRedirect("LoginServlet");

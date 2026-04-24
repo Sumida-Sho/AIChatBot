@@ -18,11 +18,6 @@
 		<ul class="list">
 			<li class="list-item"><a href="RegisterServlet">新規登録</a></li>
 			<li class="list-item"><a href="LoginServlet">ログイン</a></li>
-		
-			<a href="DeleteServlet">削除</a>
-			<a href="MyPageServlet">マイページ</a>
-			<a href="PostServlet">質問</a>
-			<a href="ProfileEditServlet">プロフィール編集</a>
 			
 		</ul>
 	
