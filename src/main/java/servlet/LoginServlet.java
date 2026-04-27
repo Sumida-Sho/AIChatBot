@@ -57,13 +57,13 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("successMessage", "ログイン成功");
 				response.sendRedirect("TimelineServlet");
 			} else {
-
-				request.setAttribute("errorMessage", "入力内容に誤りがあります");
-				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				request.setAttribute("errorMessage", "エラーが発生しました。");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-
+			request.setAttribute("errorMessage", "ログインエラーが発生しました" + e.getMessage());
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 
 	}

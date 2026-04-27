@@ -47,7 +47,7 @@
 				<label for="title" class="form-label">
 					質問内容<span class="required">*</span>
 				</label>
-				<input type="text" id="content" name="content" class="form-input" maxlength="200" required value="<%=request.getParameter("content") != null ? request.getParameter("content") : ""%>">	
+				<textarea id="content" name="content" class="form-input" rows="4" required value="<%=request.getParameter("content") != null ? request.getParameter("content") : ""%>"></textarea>	
 			</div>
 			<button type="submit" class="btn">AIに質問する</button>
 			<a href="TimelineServlet" class="btn">キャンセル</a>

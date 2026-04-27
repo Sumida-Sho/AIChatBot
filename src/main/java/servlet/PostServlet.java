@@ -39,8 +39,15 @@ public class PostServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			User loginUser = (User) session.getAttribute("loginUser");
-
 			String content = request.getParameter("content");
+
+			String errorMessage = validateInput(content);
+			if (errorMessage != null) {
+				request.setAttribute("errorMessage", errorMessage);
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+				return;
+			}
+
 			String prompt = "以下の質問に、長くても300文字程度までで詳細に解説してください\n\n『" + content + "』";
 			String aiResponse = GeminiAPI.ask(prompt);
 
@@ -54,8 +61,8 @@ public class PostServlet extends HttpServlet {
 				if (success) {
 					request.getSession().setAttribute("successMessage", "質問完了");
 				} else {
-					request.setAttribute("errorMessage", "記事の投稿に失敗しました");
-					request.getRequestDispatcher("/post.jsp").forward(request, response);
+					request.setAttribute("errorMessage", "エラーが発生しました。");
+					request.getRequestDispatcher("/error.jsp").forward(request, response);
 				}
 				response.sendRedirect("TimelineServlet");
 			} else {
@@ -63,17 +70,10 @@ public class PostServlet extends HttpServlet {
 				return;
 			}
 
-			String errorMessage = validateInput(content);
-			if (errorMessage != null) {
-				request.setAttribute("errorMessage", errorMessage);
-				request.getRequestDispatcher("/error.jsp").forward(request, response);
-				return;
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "システムエラー：" + e.getMessage());
-			request.getRequestDispatcher("/post.jsp").forward(request, response);
+			request.setAttribute("errorMessage", "エラーが発生しました。" + e.getMessage());
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 
 	}
@@ -82,8 +82,8 @@ public class PostServlet extends HttpServlet {
 		if (content == null || content.trim().isEmpty()) {
 			return "質問内容を入力してください";
 		}
-		if (content.length() > 200) {
-			return "質問内容は２００文字以内で入力してください";
+		if (content.length() > 100) {
+			return "質問内容は１００文字以内で入力してください";
 		}
 		return null;
 	}

@@ -38,6 +38,8 @@ public class MyPageServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			request.setAttribute("errorMessage", "エラーが発生しました。" + e.getMessage());
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 		session.setAttribute("loginUser", loginUser);
 		request.setAttribute("myPosts", myPosts);

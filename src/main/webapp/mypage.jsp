@@ -43,7 +43,13 @@
 				<ul class="bio-list">
 					<li>名前：<%=loginUser.getUsername() %></li>
 					<li>メールアドレス：<%=loginUser.getEmail() %></li>
-					<li>自己紹介：<%=loginUser.getBio() %></li>
+					<li>自己紹介：
+						<% if(loginUser.getBio()==null){ %>
+						なし
+						<%}else{ %>
+						<%=loginUser.getBio() %>
+						<%} %>
+					</li>
 				</ul>
 				<%
 					@SuppressWarnings("unchecked")

@@ -67,8 +67,8 @@ public class ProfileEditServlet extends HttpServlet {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
-				request.setAttribute("errorMessage", "登録中にシステムエラーが発生しました");
-				request.getRequestDispatcher("/profile_edit.jsp").forward(request, response);
+				request.setAttribute("errorMessage", "システムエラーが発生しました" + e.getMessage());
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
 			}
 		}
 

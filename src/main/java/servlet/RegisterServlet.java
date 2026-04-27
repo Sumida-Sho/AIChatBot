@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "登録中にシステムエラーが発生しました");
+			request.setAttribute("errorMessage", "システムエラーが発生しました" + e.getMessage());
 			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 
