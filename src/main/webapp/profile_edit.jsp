@@ -12,6 +12,7 @@
 </head>
 <body>
 	<div class="container">
+	<h1 class="title">プロフィール編集</h1>
 	
 		<form action="ProfileEditServlet" method="post">
 			<input type="hidden" name="userId" value="<%= loginUser.getUserId() %>">
@@ -47,7 +48,7 @@
 			</table>
 	
 			<div class="form-action">
-				<button type="submit" class="btn">更新する</button>
+				<button type="submit" class="btn" onclick="return confirm('本当に更新しますか？')">更新する</button>
 				<a href="MyPageServlet" class="btn">キャンセル</a>
 			</div>
 			

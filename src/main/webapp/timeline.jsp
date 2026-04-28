@@ -15,32 +15,31 @@
 	%>
 	<div class="container">
 		<header class="header">
-			<a href="TimelineServlet">AIチャットボット</a>
+			<h1 class="title"><a href="TimelineServlet" class="title-link">タイムライン</a></h1>
 		</header>
 		
 		<nav  class="navigation">
 			<ul class="nav-list">
 				<li class="nav-item">
-					<a href="PostServlet" class="">AIに質問する</a>
+					<a href="PostServlet">AIに質問する</a>
 				</li>
 				<li class="nav-item">
-					<a href="MyPageServlet" class="">マイページ</a>
+					<a href="MyPageServlet">マイページ</a>
 				</li>
 				<li class="nav-item">
-					<a href="LogoutServlet" class="" onclick="return confirm('本当にログアウトしますか？');">ログアウト</a>
+					<a href="LogoutServlet" onclick="return confirm('本当にログアウトしますか？');">ログアウト</a>
 				</li>
 			</ul>
 		</nav>
 		
 		<main class="main-content">
 		<%
-			String msg=(String)session.getAttribute("successMessage");
-			if(msg!=null){
-				out.println("<p style='color:blue;'>"+msg+"</p>");
-			}
+			String msg=(String)request.getAttribute("successMessage");
+			if(msg!=null && !msg.trim().isEmpty()){
 		%>
-		<%
-			session.removeAttribute("successMessage");
+			<div class="message message-success"><%=msg %></div>
+		<% 
+			}
 		%>
 			<div class="article-list">
 				<%

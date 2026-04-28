@@ -10,30 +10,30 @@
 </head>
 <body>
 	<div class="container">
-		<h1>AIチャットボット-ログイン画面</h1>
+		<h1 class="title">ログイン</h1>
 		
 		<%
-				String successMsg=(String)session.getAttribute("successMessage");
-				if(successMsg!=null){
-					out.println("<p style='color:blue;'>"+successMsg+"</p>");
-				}
+			String successMsg=(String)request.getAttribute("successMessage");
+			if(successMsg!=null && !successMsg.trim().isEmpty()){
+		%>
+			<div class="message message-success"><%=successMsg %></div>
+		<% 
+			}
 		%>
 		
 		<%
-			session.removeAttribute("successMessage");
+			String errorMsg=(String)request.getAttribute("errorMessage");
+			if(errorMsg!=null && !errorMsg.trim().isEmpty()){
 		%>
-	
-		<%
-				String errorMsg=(String)request.getAttribute("errorMessage");
-				if(errorMsg!=null){
-					out.println("<p style='color:red;'>"+errorMsg+"</p>");
-				}
+			<div class="message message-error"><%=errorMsg %></div>
+		<% 
+			}
 		%>
 		<div class="about">
 			メールアドレスとパスワードを入力してください
 		</div>
 		<form action="LoginServlet" method="post">
-			<table border="0" class="">
+			<table border="0" class="table">
 				<tr>
 					<th>メールアドレス：</th>
 					<td><input type="email" name="email"></td>

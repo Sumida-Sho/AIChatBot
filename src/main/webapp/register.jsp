@@ -10,14 +10,24 @@
 </head>
 <body>
 	<div class="container">
+	<h1 class="title">新規登録</h1>
 		<%
 			String msg=(String)request.getAttribute("errorMessage");
-			if(msg!=null){
-				out.println("<p style='color:red;'>"+msg+"</p>");
+			if(msg!=null && !msg.trim().isEmpty()){
+		%>
+			<div class="message message-error"><%=msg %></div>
+		<% 
 			}
 		%>
+		<div class="about">
+			<ul>
+				<li class="list-about">名前、メールアドレス、パスワードを記入して登録してください</li>
+				<li class="list-about">パスワードは８文字以上１５文字以内で設定お願いします</li>
+			</ul>
+		</div>
+		
 		<form action="RegisterServlet" method="post">
-			<table border="0">
+			<table border="0" class="table">
 				<tr>
 					<th>名前：</th>
 					<td><input type="text" name="username"></td>

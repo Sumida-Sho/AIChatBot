@@ -29,7 +29,7 @@
 		</nav>
 		
 		<main class="main-content">
-		<h2 class="page-title">AIに質問</h2>
+		<h1 class="title">AIに質問</h1>
 		
 		<%
 			String errorMessage=(String) request.getAttribute("errorMessagge");		

@@ -46,6 +46,18 @@ public class RegisterServlet extends HttpServlet {
 			return;
 		}
 
+		if (username.length() > 10) {
+			request.setAttribute("errorMessage", "名前は１０文字以内で記入してください");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			return;
+		}
+
+		if (password.length() < 8 || password.length() > 15) {
+			request.setAttribute("errorMessage", "パスワードは８文字以上１５文字以内で記入してください");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			return;
+		}
+
 		try {
 
 			User user = new User(username, email, password);

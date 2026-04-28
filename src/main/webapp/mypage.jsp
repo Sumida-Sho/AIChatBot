@@ -13,7 +13,7 @@
 <body>
  	<div class="container">
 		<header class="header">
-			<a href="TimelineServlet">AIチャットボット</a>
+			<h1 class="title">マイページ</h1>
 		</header>
 		<nav  class="navigation">
 			<ul class="nav-list">
@@ -31,15 +31,14 @@
 		
 		<main class="main-content">
 		<%
-			String msg=(String)session.getAttribute("successMessage");
-			if(msg!=null){
-				out.println("<p style='color:blue;'>"+msg+"</p>");
+			String msg=(String)request.getAttribute("successMessage");
+			if(msg!=null && !msg.trim().isEmpty()){
+		%>
+			<div class="message message-success"><%=msg %></div>
+		<% 
 			}
 		%>
-		<%
-			session.removeAttribute("successMessage");
-		%>
-			<div class="article-list">
+			<div class="article-mylist">
 				<ul class="bio-list">
 					<li>名前：<%=loginUser.getUsername() %></li>
 					<li>メールアドレス：<%=loginUser.getEmail() %></li>
@@ -58,7 +57,7 @@
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd HH:mm");
 						for(Post p : myPosts){
 				%>	
-				<div class="article-item">
+				<div class="article-myitem">
 					
 					<div class="username"><%=p.getUsername() %></div>
 					<span class="date"><%=dateFormat.format(p.getCreatedAt()) %></span>
@@ -66,7 +65,7 @@
 					<h4 class="question-content"><%=p.getContent() %></h4>
 					<div class="response">🤖回答</div>
 					<p class="ai-response"><%=p.getAiResponse() %></p>
-					<a href="DeleteServlet?postId=<%=p.getPostId() %>&userId=<%=p.getUserId() %>>" onclick="return confirm('本当にこの質問を削除しますか？');">削除</a>
+					<a href="DeleteServlet?postId=<%=p.getPostId() %>&userId=<%=p.getUserId() %>>" class="btn"  onclick="return confirm('本当にこの質問を削除しますか？');">削除</a>
 				</div>
 				
 				<%
