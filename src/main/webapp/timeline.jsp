@@ -34,13 +34,15 @@
 		
 		<main class="main-content">
 		<%
-			String msg=(String)request.getAttribute("successMessage");
+			String msg=(String)session.getAttribute("successMessage");
 			if(msg!=null && !msg.trim().isEmpty()){
 		%>
 			<div class="message message-success"><%=msg %></div>
 		<% 
 			}
 		%>
+		
+		<% session.removeAttribute("successMessage"); %>
 			<div class="article-list">
 				<%
 					@SuppressWarnings("unchecked")
@@ -65,7 +67,7 @@
 				%>
 					<div class="no-posts">
 						<p>質問とそれに対するAIの回答が存在しません</p>
-						<a href="PostServlet" class="btn ">最初の質問を投稿する</a>
+						<a href="PostServlet" class="nopost-btn">最初の質問を投稿する</a>
 					</div>
 				<%
 					}

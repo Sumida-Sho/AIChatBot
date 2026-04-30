@@ -60,11 +60,8 @@ public class ProfileEditServlet extends HttpServlet {
 					session.setAttribute("loginUser", loginUser);
 					session.setAttribute("successMessage", "更新完了しました");
 					response.sendRedirect("MyPageServlet");
-				} else {
-					request.setAttribute("errorMessage", "エラーが発生しました");
-					request.getRequestDispatcher("/error.jsp").forward(request, response);
+					return;
 				}
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 				request.setAttribute("errorMessage", "システムエラーが発生しました" + e.getMessage());

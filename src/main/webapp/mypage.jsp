@@ -31,18 +31,22 @@
 		
 		<main class="main-content">
 		<%
-			String msg=(String)request.getAttribute("successMessage");
+			String msg=(String)session.getAttribute("successMessage");
 			if(msg!=null && !msg.trim().isEmpty()){
 		%>
 			<div class="message message-success"><%=msg %></div>
 		<% 
 			}
 		%>
+		
+		<% session.removeAttribute("successMessage"); %>
+		
 			<div class="article-mylist">
 				<ul class="bio-list">
-					<li>名前：<%=loginUser.getUsername() %></li>
-					<li>メールアドレス：<%=loginUser.getEmail() %></li>
-					<li>自己紹介：
+					<li class="bio-name">名前:<%=loginUser.getUsername() %></li>
+					<li class="bio-email">メールアドレス:<%=loginUser.getEmail() %></li>
+					<li class="bio-bio">自己紹介:
+					<li class="mypage-bio">
 						<% if(loginUser.getBio()==null){ %>
 						なし
 						<%}else{ %>
@@ -74,7 +78,7 @@
 				%>
 					<div class="no-posts">
 						<p>あなたの投稿はありません</p>
-						<a href="PostServlet" class="btn ">最初の質問をする</a>
+						<a href="PostServlet" class="nopost-btn">最初の質問をする</a>
 					</div>
 				<%
 					}

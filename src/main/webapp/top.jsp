@@ -12,6 +12,18 @@
 	<div class="container">
 		
 		<h1 class="title">AIチャットボット-トップ画面</h1>
+		
+		<%
+			String msg=(String)session.getAttribute("successMessage");
+			if(msg!=null && !msg.trim().isEmpty()){
+		%>
+			<div class="message message-success"><%=msg %></div>
+		<% 
+			}
+		%>
+		
+		<% session.removeAttribute("successMessage"); %>
+		
 		<div class="about">初めてご利用になられる方は新規登録ボタンより登録を済ませてログインしてください。<br>
 		既に登録されている方はログインしてください。
 		</div>

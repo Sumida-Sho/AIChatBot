@@ -36,6 +36,7 @@ public class UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのINSERT処理エラー発生");
+			throw e;
 		}
 		return false;
 	}
@@ -43,7 +44,7 @@ public class UserDAO {
 	public User login(String email, String password) throws SQLException {
 		String hash = hPassword(password);
 
-		String sql = "SELECT username,email,password,user_id FROM users WHERE email=? AND password=?";
+		String sql = "SELECT username , email , password , user_id, bio FROM users WHERE email=? AND password=?";
 
 		try (Connection connection = ConnectionManager.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -56,6 +57,7 @@ public class UserDAO {
 					user.setUserId(rs.getInt("user_id"));
 					user.setUsername(rs.getString("username"));
 					user.setEmail(rs.getString("email"));
+					user.setBio(rs.getString("bio"));
 
 					return user;
 				}
@@ -99,7 +101,7 @@ public class UserDAO {
 				if (resultSet.next()) {
 					User user = new User();
 					user.setUserId(resultSet.getInt("user_id"));
-					user.setUsername(resultSet.getString("name"));
+					user.setUsername(resultSet.getString("username"));
 					return user;
 				}
 			}

@@ -63,17 +63,13 @@ public class RegisterServlet extends HttpServlet {
 			User user = new User(username, email, password);
 			UserDAO dao = new UserDAO();
 			boolean register = dao.insert(user);
+			HttpSession session = request.getSession();
 
 			if (register) {
-				HttpSession session = request.getSession();
 				session.setAttribute("successMessage", "新規登録に成功しました");
 				response.sendRedirect("LoginServlet");
-			} else {
-
-				request.setAttribute("errorMessage", "既に登録済みか、入力内容が正しくありません");
-				request.getRequestDispatcher("/register.jsp").forward(request, response);
+				return;
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "システムエラーが発生しました" + e.getMessage());

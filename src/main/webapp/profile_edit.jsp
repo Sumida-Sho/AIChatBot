@@ -16,9 +16,9 @@
 	
 		<form action="ProfileEditServlet" method="post">
 			<input type="hidden" name="userId" value="<%= loginUser.getUserId() %>">
-			<table border="0"class="table-edit">
+			<table border="0" class="table-edit">
 				<tr>
-					<th>現在の名前：</th>
+					<th>現在の名前:</th>
 					<td class="now-name"><%=loginUser.getUsername() %></td>
 				</tr>
 				<tr>

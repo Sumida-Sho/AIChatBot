@@ -58,14 +58,15 @@ public class PostServlet extends HttpServlet {
 				PostDAO dao = new PostDAO();
 				boolean success = dao.insert(post);
 
-				if (success) {
-					request.getSession().setAttribute("successMessage", "質問完了");
-				} else {
+				if (!success) {
 					request.setAttribute("errorMessage", "エラーが発生しました。");
 					request.getRequestDispatcher("/error.jsp").forward(request, response);
 				}
+				request.getSession().setAttribute("successMessage", "質問完了");
 				response.sendRedirect("TimelineServlet");
+
 			} else {
+				request.setAttribute("errorMessage", "ログインしてください");
 				response.sendRedirect("LoginServlet");
 				return;
 			}

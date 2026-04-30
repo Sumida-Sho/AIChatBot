@@ -34,6 +34,7 @@ public class PostDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのinsert処理エラー発生");
+
 			return false;
 		}
 		return false;

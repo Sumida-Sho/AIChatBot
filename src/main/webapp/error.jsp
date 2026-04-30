@@ -10,13 +10,20 @@
 </head>
 <body>
 	<div class="container">
+		<h1 class="title">AIチャットボット-エラー</h1>
+		
 		<%
 			String msg=(String)request.getAttribute("errorMessage");
 			if(msg!=null){
-				out.println("<p style='color:red;'>"+msg+"</p>");
+		%>		
+			<div class="message message-error"><%=msg %></div>
+		<% 	
 			}
 		%>
 		
+		<div class="about">
+			戻るには、左上の←を押して下さい
+		</div>
 		<footer class="footer">
 			<p>&copy;2026 AIChatBot</p>
 		</footer>

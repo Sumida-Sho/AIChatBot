@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("successMessage", "ログイン成功");
 				response.sendRedirect("TimelineServlet");
 			} else {
-				request.setAttribute("errorMessage", "エラーが発生しました。");
+				request.setAttribute("errorMessage", "メールアドレスかパスワードが間違っています");
 				request.getRequestDispatcher("/error.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {

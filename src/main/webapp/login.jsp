@@ -13,13 +13,15 @@
 		<h1 class="title">ログイン</h1>
 		
 		<%
-			String successMsg=(String)request.getAttribute("successMessage");
+			String successMsg=(String)session.getAttribute("successMessage");
 			if(successMsg!=null && !successMsg.trim().isEmpty()){
 		%>
 			<div class="message message-success"><%=successMsg %></div>
 		<% 
 			}
 		%>
+		
+		<% session.removeAttribute("successMessage"); %>
 		
 		<%
 			String errorMsg=(String)request.getAttribute("errorMessage");
@@ -29,6 +31,7 @@
 		<% 
 			}
 		%>
+		
 		<div class="about">
 			メールアドレスとパスワードを入力してください
 		</div>
