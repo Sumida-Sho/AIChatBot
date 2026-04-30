@@ -16,10 +16,10 @@
 	
 		<form action="ProfileEditServlet" method="post">
 			<input type="hidden" name="userId" value="<%= loginUser.getUserId() %>">
-			<table border="0">
+			<table border="0"class="table-edit">
 				<tr>
 					<th>現在の名前：</th>
-					<td><%=loginUser.getUsername() %></td>
+					<td class="now-name"><%=loginUser.getUsername() %></td>
 				</tr>
 				<tr>
 					<th>新しい名前:</th>
@@ -30,11 +30,11 @@
 					<th>現在の自己紹介:</th>
 					<%if(loginUser.getBio()==null){
 						%>
-					<td>なし</td>
+					<td class="now-bio">なし</td>
 					<%
 					}else{
 					%>
-					<td><%=loginUser.getBio() %></td>
+					<td class="now-bio"><%=loginUser.getBio() %></td>
 					<%
 					}
 					%>	
