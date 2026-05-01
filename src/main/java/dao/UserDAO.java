@@ -36,7 +36,6 @@ public class UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのINSERT処理エラー発生");
-			throw e;
 		}
 		return false;
 	}
@@ -64,9 +63,8 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("ログインエラー発生");
+			throw e;
 		}
-
 		return null;
 	}
 

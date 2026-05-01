@@ -21,13 +21,22 @@
 			}
 		%>
 		
-		<% session.removeAttribute("successMessage"); %>
+		<% session.removeAttribute("successMessage"); %><%--sessionの場合は一度表示したら削除 --%>
 		
 		<%
 			String errorMsg=(String)request.getAttribute("errorMessage");
 			if(errorMsg!=null && !errorMsg.trim().isEmpty()){
 		%>
 			<div class="message message-error"><%=errorMsg %></div>
+		<% 
+			}
+		%>
+		
+		<%
+			String errorMsg2=(String)session.getAttribute("errorMessage");
+			if(errorMsg2!=null && !errorMsg2.trim().isEmpty()){
+		%>
+			<div class="message message-error"><%=errorMsg2 %></div>
 		<% 
 			}
 		%>

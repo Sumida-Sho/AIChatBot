@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			UserDAO dao = new UserDAO();
 
-			if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+			if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) { //メアドとパスワードの不正確認
 				request.setAttribute("errorMessage", "正しく入力してください");
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				return;
@@ -56,10 +56,11 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("loginUser", loginUser);
 				session.setAttribute("successMessage", "ログイン成功");
 				response.sendRedirect("TimelineServlet");
-			} else {
-				request.setAttribute("errorMessage", "メールアドレスかパスワードが間違っています");
-				request.getRequestDispatcher("/error.jsp").forward(request, response);
+				return;
 			}
+			request.setAttribute("errorMessage", "メールアドレスまたはパスワードが正しくありません");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "ログインエラーが発生しました" + e.getMessage());

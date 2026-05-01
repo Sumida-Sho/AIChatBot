@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AiChatBot</title>
+<title>AiChatBot-プロフィール編集</title>
  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -28,17 +28,7 @@
 		
 				<tr>
 					<th>現在の自己紹介:</th>
-					<%if(loginUser.getBio()==null){
-						%>
-					<td class="now-bio">なし</td>
-					<%
-					}else{
-					%>
-					<td class="now-bio"><%=loginUser.getBio() %></td>
-					<%
-					}
-					%>	
-					
+					<td class="now-bio"><%= (loginUser.getBio()==null) ? "なし" : loginUser.getBio().trim() %></td>
 				</tr>
 				<tr>
 					<th>新しい自己紹介:</th>

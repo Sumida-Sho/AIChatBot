@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AiChatBot</title>
+<title>AiChatBot-マイページ</title>
  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -46,14 +46,9 @@
 					<li class="bio-name">名前:<%=loginUser.getUsername() %></li>
 					<li class="bio-email">メールアドレス:<%=loginUser.getEmail() %></li>
 					<li class="bio-bio">自己紹介:
-					<li class="mypage-bio">
-						<% if(loginUser.getBio()==null){ %>
-						なし
-						<%}else{ %>
-						<%=loginUser.getBio() %>
-						<%} %>
-					</li>
+					<li class="mypage-bio"><%= (loginUser.getBio()==null)? "なし" : loginUser.getBio() %></li><%--三項演算子 --%>
 				</ul>
+				<%--エラー警告の抑制、List型のmyPostsに取得してキャストしたデータを格納 --%>
 				<%
 					@SuppressWarnings("unchecked")
 					List<Post> myPosts=(List<Post>)request.getAttribute("myPosts");

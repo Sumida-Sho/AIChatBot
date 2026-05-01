@@ -35,11 +35,11 @@ public class RegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		String username = request.getParameter("username");
+		String username = request.getParameter("username");//入力情報の取得
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		if (username == null || username.trim().isEmpty() || email == null || email.trim().isEmpty() || password == null
+		if (username == null || username.trim().isEmpty() || email == null || email.trim().isEmpty() || password == null//入力値の不正チェック
 				|| password.trim().isEmpty()) {
 			request.setAttribute("errorMessage", "正しく入力してください");
 			request.getRequestDispatcher("/register.jsp").forward(request, response);
@@ -60,9 +60,9 @@ public class RegisterServlet extends HttpServlet {
 
 		try {
 
-			User user = new User(username, email, password);
+			User user = new User(username, email, password);//User型のオブジェクトに入力情報を格納
 			UserDAO dao = new UserDAO();
-			boolean register = dao.insert(user);
+			boolean register = dao.insert(user);//DBのINSERT処理
 			HttpSession session = request.getSession();
 
 			if (register) {
@@ -72,7 +72,7 @@ public class RegisterServlet extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "システムエラーが発生しました" + e.getMessage());
+			request.setAttribute("errorMessage", "システムエラーが発生しました　" + e.getMessage());
 			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 

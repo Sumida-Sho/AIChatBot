@@ -34,8 +34,7 @@ public class PostDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのinsert処理エラー発生");
-
-			return false;
+			throw e;
 		}
 		return false;
 	}
@@ -68,6 +67,7 @@ public class PostDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("findAll処理エラー発生");
+			throw e;
 		}
 		return posts;
 	}
@@ -103,6 +103,7 @@ public class PostDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのSELECT処理エラー発生");
+			throw e;
 		}
 		return myPosts;
 	}
@@ -121,7 +122,7 @@ public class PostDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("DBのdelete処理エラー発生");
-			return false;
+			throw e;
 		}
 	}
 
