@@ -48,7 +48,7 @@ public class PostServlet extends HttpServlet {
 				return;
 			}
 
-			String prompt = "以下の質問に、長くても300文字程度までで詳細に解説してください\n\n『" + content + "』"; //APIへの質問、回答指示
+			String prompt = "以下の質問に、長くても300文字以内までで詳細に解説してください\n\n『" + content + "』"; //APIへの質問、回答指示
 			String aiResponse = GeminiAPI.ask(prompt);
 
 			if (loginUser != null) { //ログイン情報があるかどうか
